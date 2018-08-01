@@ -7,7 +7,7 @@ Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve. Located un
 example:
 
 
-source file
+source file(from this awesome site https://openclipart.org/detail/297280/abstract-rooster)
 
 <img src="https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png" width = "500" height = "500" alt="from" align=center />
 
