@@ -7,12 +7,15 @@ example:
 ![view](https://github.com/zasti/GhPotrace/blob/master/file.png)
 
 source file
+
 <img src="https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png" width = "500" height = "500" alt="from" align=center />
 
 convert to nurbsCurve the assign random color
+
 <img src="https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png" width = "500" height = "500" alt="to" align=center />
 
 morph pattern to surface
+
 ![ball](https://github.com/zasti/GhPotrace/blob/master/surface%20morph.png)
 
 # Referrence
