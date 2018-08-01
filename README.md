@@ -2,9 +2,10 @@
 Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve.
 
 example:
-![from](https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png)
-![to](https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png)
-
+![view](https://github.com/zasti/GhPotrace/blob/master/file.png){:height="50%" width="50%"}
+![from](https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png){:height="50%" width="50%"}
+![to](https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png){:height="50%" width="50%"}
+![ball](https://github.com/zasti/GhPotrace/blob/master/surface%20morph.png){:height="50%" width="50%"}
 
 # Referrence
 This plugin modified code from the C# Vectorization. Detailed can be viewed in source code.
