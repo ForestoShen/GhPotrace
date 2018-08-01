@@ -1,10 +1,11 @@
 # GhPotrace
-Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve.
+Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve. Located under Param->Util
+
+![pos](https://github.com/zasti/GhPotrace/blob/master/pos.png)
+![view](https://github.com/zasti/GhPotrace/blob/master/file.png)
 
 example:
 
-
-![view](https://github.com/zasti/GhPotrace/blob/master/file.png)
 
 source file
 
