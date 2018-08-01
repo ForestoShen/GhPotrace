@@ -2,10 +2,13 @@
 Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve.
 
 example:
-<img src="https://github.com/zasti/GhPotrace/blob/master/file.png" width = "300" height = "200" alt="ball" align=center />
+
+
 ![view](https://github.com/zasti/GhPotrace/blob/master/file.png)
-![from](https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png)
-![to](https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png)
+
+<img src="https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png" width = "300" height = "200" alt="from" align=center />
+<img src="https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png" width = "300" height = "200" alt="to" align=center />
+
 ![ball](https://github.com/zasti/GhPotrace/blob/master/surface%20morph.png)
 
 # Referrence
