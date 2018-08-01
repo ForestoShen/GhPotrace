@@ -1,5 +1,6 @@
 # GhPotrace
 Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve.
+![image](https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png)
 
 # Referrence
 Potrace, Copyright © 2001-2017 Peter Selinger. http://potrace.sourceforge.net/
