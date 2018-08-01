@@ -3,6 +3,7 @@ Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve.
 
 # Referrence
 Potrace, Copyright © 2001-2017 Peter Selinger. http://potrace.sourceforge.net/
+
 Vectorization, by Wolfgang Nagl. A port of Potrace 1.8 to C# Visual Studio. https://www.drawing3d.de/Downloads.aspx
 
 # License
