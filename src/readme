@@ -1,0 +1,2 @@
+The CsPotrace is modified from the C# port https://www.drawing3d.de/Downloads.aspx,
+change the output format to be compatiable with rhinocommon type.
