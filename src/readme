@@ -1,2 +1,9 @@
-The CsPotrace is modified from the C# port https://www.drawing3d.de/Downloads.aspx,
-change the output format to be compatiable with rhinocommon type.
+The CsPotrace is modified from the C# port here: https://www.drawing3d.de/Downloads.aspx,
+
+Replace some custom class with Rhino native class
+
+Change the output format to be compatiable with rhinocommon type
+
+Add a option to invert input img
+
+Fix the problem when input PNG has transparency
