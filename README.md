@@ -6,8 +6,8 @@ example:
 
 ![view](https://github.com/zasti/GhPotrace/blob/master/file.png)
 
-<img src="https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png" width = "300" height = "200" alt="from" align=center />
-<img src="https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png" width = "300" height = "200" alt="to" align=center />
+<img src="https://github.com/zasti/GhPotrace/blob/master/example/Abstract-Rooster-Silhouette.png" width = "500" height = "500" alt="from" align=center />
+<img src="https://github.com/zasti/GhPotrace/blob/master/Potrace_232644.png" width = "500" height = "500" alt="to" align=center />
 
 ![ball](https://github.com/zasti/GhPotrace/blob/master/surface%20morph.png)
 
