@@ -1,0 +1,7 @@
+d:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csprojResolveAssemblyReference.cache
+d:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\bin\GhPotrace.dll
+d:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\bin\GhPotrace.pdb
+d:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.dll
+d:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.pdb
+D:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.Properties.Resources.resources
+D:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csproj.GenerateResource.Cache
