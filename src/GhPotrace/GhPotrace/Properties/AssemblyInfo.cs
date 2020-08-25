@@ -7,13 +7,13 @@ using Rhino.PlugIns;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GhPotrace")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("GhPotrace [ShapeDiver Version]")]
+[assembly: AssemblyDescription("GhPotrace [ShapeDiver Version]")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GhPotrace")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("ShapeDiver GmbH")]
+[assembly: AssemblyProduct("GhPotrace [ShapeDiver Version]")]
+[assembly: AssemblyCopyright("Copyright ©  ShapeDiver GmbH 2020")]
+[assembly: AssemblyTrademark("ShapeDiver")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
