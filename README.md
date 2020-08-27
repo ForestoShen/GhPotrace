@@ -1,4 +1,9 @@
 # GhPotrace
+
+**Modified version of GhPotrace / Rooster for compatibility and support on the [ShapeDiver](https://shapediver.com/) Platform**
+
+***
+
 Potrace for grasshopper, it's used to convert a bitmap to nurbsCurve. Located under Param->Util
 
 ![pos](https://github.com/zasti/GhPotrace/blob/master/pos.png)
