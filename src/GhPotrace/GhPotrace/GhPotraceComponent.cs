@@ -10,6 +10,13 @@ using ShapeDiver.Public.Grasshopper.Parameters;
 using System.Windows.Forms;
 using GH_IO.Serialization;
 
+// Modified for Compatibility with ShapeDiver's Grasshopper Bitmap Parameter and Support on the ShapeDiver Platform, along with general Improvements and Bugfixes
+// Original author: Foresto Shen
+// https://github.com/ForestoShen/GhPotrace
+// License: GNU
+// Modified by Praneet Mathur for ShapeDiver GmbH
+// https://shapediver.com/
+
 namespace GhPotrace
 {
     public class GhPotraceComponent : GH_Component
@@ -120,36 +127,37 @@ namespace GhPotrace
                 return;
             }
 
-            bm.RotateFlip(RotateFlipType.RotateNoneFlipY);
 
             // convert png transparent background to white
-            var b = new Bitmap(bm.Width, bm.Height);
-            b.SetResolution(bm.HorizontalResolution, bm.VerticalResolution);
-            using (var g = Graphics.FromImage(b))
+            using (Bitmap b = new Bitmap(bm.Width, bm.Height))
             {
-                g.Clear(Color.White);
-                g.DrawImageUnscaled(bm, 0, 0);
+                b.SetResolution(bm.HorizontalResolution, bm.VerticalResolution);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.Clear(Color.White);
+                    g.DrawImageUnscaled(bm, 0, 0);
+                }
+
+                b.RotateFlip(RotateFlipType.RotateNoneFlipY);
+
+                if (treeOutput && Params.Output[0].Access == GH_ParamAccess.tree)
+                {
+                    DataTree<Curve> crvs = new DataTree<Curve>();
+                    Potrace.Potrace_Trace(b, crvs, inv);
+
+                    DA.SetDataTree(0, crvs);
+                }
+                else
+                {
+                    List<Curve> crvs = new List<Curve>();
+                    Potrace.Potrace_Trace(b, crvs, inv);
+
+                    DA.SetDataList(0, crvs);
+                }
+
+                Rectangle3d boundary = new Rectangle3d(Plane.WorldXY, (double)b.Width, (double)b.Height);
+                DA.SetData(1, boundary);
             }
-
-            if (treeOutput && Params.Output[0].Access == GH_ParamAccess.tree)
-            {
-                DataTree<Curve> crvs = new DataTree<Curve>();
-                Potrace.Potrace_Trace(b, crvs, inv);
-
-                DA.SetDataTree(0, crvs);
-            }
-            else
-            {
-                List<Curve> crvs = new List<Curve>();
-                Potrace.Potrace_Trace(b, crvs, inv);
-
-                DA.SetDataList(0, crvs);
-            }
-
-            Rectangle3d boundary = new Rectangle3d(Plane.WorldXY, (double)b.Width, (double)b.Height);
-            DA.SetData(1, boundary);
-
-
         }
         protected override void BeforeSolveInstance()
         {
