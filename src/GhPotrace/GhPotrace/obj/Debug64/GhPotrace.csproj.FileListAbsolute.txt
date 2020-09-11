@@ -8,9 +8,10 @@ D:\Documents\Visual Studio 2015\Projects\GhPotrace\GhPotrace\obj\Debug64\GhPotra
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\bin\GhPotrace.dll.config
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\bin\GhPotrace.dll
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\bin\GhPotrace.pdb
-D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csprojAssemblyReference.cache
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.Properties.Resources.resources
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csproj.GenerateResource.cache
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csproj.CoreCompileInputs.cache
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.dll
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.pdb
+D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\bin\nQuant.Core.dll
+D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csproj.CopyComplete

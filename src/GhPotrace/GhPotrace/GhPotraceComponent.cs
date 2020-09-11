@@ -9,6 +9,10 @@ using Grasshopper;
 using ShapeDiver.Public.Grasshopper.Parameters;
 using System.Windows.Forms;
 using GH_IO.Serialization;
+using nQuant;
+using Grasshopper.Kernel.Types;
+using Grasshopper.Kernel.Data;
+using System.Drawing.Imaging;
 
 // Modified for Compatibility with ShapeDiver's Grasshopper Bitmap Parameter and Support on the ShapeDiver Platform, along with general Improvements and Bugfixes
 // Original author: Foresto Shen
@@ -35,7 +39,7 @@ namespace GhPotrace
         {
         }
 
-        bool treeOutput = false;
+        bool getColors = true;
         ToolStripMenuItem tp;
 
         /// <summary>
@@ -46,10 +50,11 @@ namespace GhPotrace
             pManager.AddParameter(new GrasshopperBitmapParam(), "Image Bitmap", "Bitmap", "Image Bitmap", GH_ParamAccess.item);
             Params.Input[pManager.AddNumberParameter("Threshold", "T", "Threshold for curve detection; 0.0 to 100.0%", GH_ParamAccess.item, 50.0)].Optional = true;
             Params.Input[pManager.AddNumberParameter("Corner Threshold", "CT", "Corner Alpha Multiplier; 0.0 to 1.0", GH_ParamAccess.item, 1.0)].Optional = true;
-            Params.Input[pManager.AddIntegerParameter("Max Turd Area", "MTA", "Curves with area larger than Max Turd Size will be ignored", GH_ParamAccess.item, 2)].Optional = true;
+            Params.Input[pManager.AddNumberParameter("Max Turd Area", "MTA", "Curves with area larger than Max Turd Size will be ignored", GH_ParamAccess.item, 2)].Optional = true;
             Params.Input[pManager.AddBooleanParameter("Optimize", "O", "Optimize Curves", GH_ParamAccess.item, true)].Optional = true;
             Params.Input[pManager.AddNumberParameter("Tolerance", "TO", "Tolerance for Optimization; 0.0 to 1.0", GH_ParamAccess.item, 0.2)].Optional = true;
-            Params.Input[pManager.AddBooleanParameter("Invert", "I", "Invert Image Colors", GH_ParamAccess.item, false)].Optional = true;
+            Params.Input[pManager.AddBooleanParameter("Invert", "I", "Invert Image Colors (if getting colors enabled) or Invert Turd Detection (if getting colors disabled)", GH_ParamAccess.item, false)].Optional = true;
+            Params.Input[pManager.AddIntegerParameter("Color Count", "C", "Color Count for Quantization", GH_ParamAccess.item, 2)].Optional = true;
             //pManager.AddTextParameter("Path", "Path", "image path", GH_ParamAccess.item);
             //pManager.AddIntegerParameter("TurnPolicy", "TP", "Turn Policy: 0 - minority,1 - majority,2 - right,3 - black,4 - white", GH_ParamAccess.item,0);
             // Note: Moved ^turn policy^ to Right-click Menu Items
@@ -59,9 +64,9 @@ namespace GhPotrace
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            if (!treeOutput) pManager.AddCurveParameter("Curves", "C", "Curve Segments", GH_ParamAccess.list);
-            else pManager.AddCurveParameter("Curves", "C", "Curve Segments", GH_ParamAccess.tree);
+            pManager.AddCurveParameter("Curves", "C", "Curve Segments", GH_ParamAccess.tree);
             pManager.AddRectangleParameter("Boundary", "B", "Rectangle boundary", GH_ParamAccess.item);
+            pManager.AddColourParameter("Colors", "Col", "List of Colors for each Curve", GH_ParamAccess.tree);
             //pManager.AddTextParameter("out", "out", "output", GH_ParamAccess.item);
         }
 
@@ -72,10 +77,11 @@ namespace GhPotrace
             GrasshopperBitmapGoo ghbm = new GrasshopperBitmapGoo();
             double t = 50.0;
             double a = 1.0;
-            int mts = 2;
+            double mts = 2;
             bool opt = true;
             double opttol = 0.2;
             bool inv = false;
+            int colorCount = 2;
 
             // Get Data from Input Params
             if (!DA.GetData(0, ref ghbm)) return;
@@ -106,18 +112,29 @@ namespace GhPotrace
                 }
             }
             DA.GetData(6, ref inv);
+            if (DA.GetData(7, ref colorCount))
+            {
+                if (colorCount < 0)
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Color Count cannot be negative");
+                    return;
+                }
+            }
+            else
+            {
+                if (getColors)
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Color Count not set. Setting 'Get Colors' to False. Please set a value for Color Count and re-enable Get Colors by right-clicking on the component");
+                    getColors = false;
+                }
+            }
 
-            // Set Data in Potrace fields
+            // set Data in Potrace fields
             Potrace.Treshold = t / 100;
-            Potrace.alphamax = a;
-            Potrace.turdsize = mts;
+            Potrace.alphamax = a * (4 / 3);
+            Potrace.turdsize = ((int)Math.Round(mts, 0, MidpointRounding.AwayFromZero));
             Potrace.curveoptimizing = opt;
             Potrace.opttolerance = opttol;
-            //int p = 0;
-            //DA.GetData(3, ref p);
-            //Potrace.turnpolicy = (TurnPolicy)p;
-            // Note: Moved ^turn policy^ to Right-click Menu Items
-            //DA.GetData(7, ref boundary);
 
             if (ghbm.IsValid && ghbm.Image != null)
                 bm = ghbm.Image;
@@ -127,37 +144,92 @@ namespace GhPotrace
                 return;
             }
 
-
             // convert png transparent background to white
-            using (Bitmap b = new Bitmap(bm.Width, bm.Height))
+            if (!getColors || (colorCount == 0))
             {
-                b.SetResolution(bm.HorizontalResolution, bm.VerticalResolution);
-                using (Graphics g = Graphics.FromImage(b))
+                using (Bitmap b = new Bitmap(bm.Width, bm.Height))
                 {
-                    g.Clear(Color.White);
-                    g.DrawImageUnscaled(bm, 0, 0);
-                }
+                    b.SetResolution(bm.HorizontalResolution, bm.VerticalResolution);
+                    using (Graphics g = Graphics.FromImage(b))
+                    {
+                        g.Clear(Color.White);
+                        g.DrawImageUnscaled(bm, 0, 0);
+                    }
 
-                b.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                    b.RotateFlip(RotateFlipType.RotateNoneFlipY);
 
-                if (treeOutput && Params.Output[0].Access == GH_ParamAccess.tree)
-                {
                     DataTree<Curve> crvs = new DataTree<Curve>();
                     Potrace.Potrace_Trace(b, crvs, inv);
 
                     DA.SetDataTree(0, crvs);
                 }
-                else
-                {
-                    List<Curve> crvs = new List<Curve>();
-                    Potrace.Potrace_Trace(b, crvs, inv);
-
-                    DA.SetDataList(0, crvs);
-                }
-
-                Rectangle3d boundary = new Rectangle3d(Plane.WorldXY, (double)b.Width, (double)b.Height);
-                DA.SetData(1, boundary);
             }
+            else
+            {
+                using (Bitmap b = new Bitmap(bm.Width, bm.Height))
+                {
+                    b.SetResolution(bm.HorizontalResolution, bm.VerticalResolution);
+                    using (Graphics g = Graphics.FromImage(b))
+                    {
+                        g.Clear(Color.Transparent);
+                        g.DrawImageUnscaled(bm, 0, 0);
+                    }
+                    b.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                    WuQuantizer quantizer = new WuQuantizer();
+                    Bitmap quantized = (Bitmap)quantizer.QuantizeImage(b, colorCount + 1);
+                    Color[] colors = new Color[colorCount];
+                    Array.Copy(quantized.Palette.Entries, 0, colors, 0, colorCount);
+                    DataTree<GH_Colour> colorsOut = new DataTree<GH_Colour>();
+                    DataTree<Curve> crvs = new DataTree<Curve>();
+                    for (int i = 0; i < colorCount; i++)
+                    {
+                        Bitmap temp = quantized.Clone(new Rectangle(0, 0, b.Width, b.Height), PixelFormat.Format32bppArgb);
+                        var bmData = temp.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+                        unsafe
+                        {
+                            byte* p = (byte*)bmData.Scan0;
+                            int stopAddress = (int)p + bmData.Stride * bmData.Height;
+                            while ((int)p != stopAddress)
+                            {
+                                if (p[0] == colors[i].B && p[1] == colors[i].G && p[2] == colors[i].R && p[3] == colors[i].A)
+                                {
+                                    p[0] = p[1] = p[2] = p[3] = 255;
+                                }
+                                else
+                                {
+                                    p[0] = p[1] = p[2] = p[3] = 0;
+                                }
+                                p += 4;
+                            }
+                            temp.UnlockBits(bmData);
+
+                            List<Curve> curves = new List<Curve>();
+                            Potrace.Potrace_Trace(temp, curves, true);
+                            crvs.AddRange(curves, new GH_Path(i));
+                            if (inv)
+                            {
+                                Color invCol = Color.FromArgb(((int)colors[i].A), (255 - ((int)colors[i].R)), (255 - ((int)colors[i].G)), (255 - ((int)colors[i].B)));
+                                colorsOut.Add(new GH_Colour(invCol), new GH_Path(i));
+                            }
+                            else
+                            {
+                                colorsOut.Add(new GH_Colour(colors[i]), new GH_Path(i));
+                            }
+                            Potrace.Clear();
+                            Potrace.Treshold = t / 100;
+                            Potrace.alphamax = a * (4 / 3);
+                            Potrace.turdsize = ((int)Math.Round(mts, 0, MidpointRounding.AwayFromZero));
+                            Potrace.curveoptimizing = opt;
+                            Potrace.opttolerance = opttol;
+                        }
+                    }
+                    DA.SetDataTree(0, crvs);
+                    DA.SetDataTree(2, colorsOut);
+                }
+            }
+            Rectangle3d boundary = new Rectangle3d(Plane.WorldXY, (double)bm.Width, (double)bm.Height);
+            DA.SetData(1, boundary);
         }
         protected override void BeforeSolveInstance()
         {
@@ -168,7 +240,7 @@ namespace GhPotrace
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            var m = Menu_AppendItem(menu, "Tree Output", ChangeMode, true, treeOutput);
+            var m = Menu_AppendItem(menu, "Get Colors", ChangeMode, true, getColors);
             m.ToolTipText = "If checked, will output unjoined curves in a tree data structure.";
 
             tp = Menu_AppendItem(menu, "Turn Policy", null, true);
@@ -183,8 +255,8 @@ namespace GhPotrace
         private void ChangeMode(object sender, EventArgs e)
         {
             RecordUndoEvent("Mode Change");
-            treeOutput = !treeOutput;
-            if (treeOutput) Params.Output[1].Access = GH_ParamAccess.tree;
+            getColors = !getColors;
+            if (getColors) Params.Output[1].Access = GH_ParamAccess.tree;
             else Params.Output[1].Access = GH_ParamAccess.list;
             ExpireSolution(true);
         }
@@ -237,14 +309,14 @@ namespace GhPotrace
 
         public override bool Write(GH_IWriter writer)
         {
-            writer.SetBoolean("RoosterOutputMode", treeOutput);
+            writer.SetBoolean("RoosterOutputMode", getColors);
             writer.SetInt32("RoosterTurnPolicy", (int)Potrace.turnpolicy);
             return base.Write(writer);
         }
 
         public override bool Read(GH_IReader reader)
         {
-            if (!reader.TryGetBoolean("RoosterOutputMode", ref treeOutput)) treeOutput = false;
+            if (!reader.TryGetBoolean("RoosterOutputMode", ref getColors)) getColors = false;
             int tpread = 0;
             if (reader.TryGetInt32("RoosterTurnPolicy", ref tpread)) Potrace.turnpolicy = (TurnPolicy)tpread;
             else Potrace.turnpolicy = TurnPolicy.minority;
