@@ -10,7 +10,7 @@ namespace GhPotrace
         {
             get
             {
-                return "GhPotrace";
+                return "GhPotrace [ShapeDiver Compatible Version]";
             }
         }
         public override Bitmap Icon
@@ -26,14 +26,14 @@ namespace GhPotrace
             get
             {
                 //Return a short string describing the purpose of this GHA library.
-                return "Vectorize a bitmap to nurbs curve, which consist of Polyline and BezierCurve";
+                return "Vectorize a bitmap to curves. This version of Rooster / GhPotrace is modified to be supported on the ShapeDiver Platform.";
             }
         }
         public override Guid Id
         {
             get
             {
-                return new Guid("63D96875-1874-484D-B5AE-76865198009C");
+                return new Guid("876df797-a78a-49ca-b69d-2c055600dcf9");
             }
         }
 
@@ -42,7 +42,7 @@ namespace GhPotrace
             get
             {
                 //Return a string identifying you or your company.
-                return "Foresto Shen";
+                return "Foresto Shen and ShapeDiver GmbH";
             }
         }
         public override string AuthorContact
@@ -50,8 +50,28 @@ namespace GhPotrace
             get
             {
                 //Return a string representing your preferred contact details.
-                return "847943216@qq.com";
+                return "847943216@qq.com and https://www.shapediver.com/";
             }
         }
+
+        public override string Version
+        {
+            get
+            {
+                return "1.1.0";
+            }
+        }
+
+        public override string AssemblyName => this.Name;
+
+        public override string AssemblyDescription => this.Description;
+
+        public override GH_LibraryLicense AssemblyLicense => this.License;
+
+        public override string AssemblyVersion => this.Version;
+
+        public override Bitmap AssemblyIcon => Properties.Resources.res;
+
+        public override GH_LibraryLicense License => GH_LibraryLicense.opensource;
     }
 }
