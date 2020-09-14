@@ -15,3 +15,4 @@ D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrac
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.pdb
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\bin\nQuant.Core.dll
 D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csproj.CopyComplete
+D:\OneDrive\Desktop\ShapeDiver\Plugin_Review\Rooster\Repo\GhPotrace\src\GhPotrace\GhPotrace\obj\Debug64\GhPotrace.csprojAssemblyReference.cache
